@@ -5,7 +5,7 @@ import cv2
 # URL на который нужно отправить запрос для тестирования
 url = 'http://0.0.0.0:8098/translate_photo'
 
-def create_request(source_path, save_path):
+def create_request(source_path, save_path, lang_from='en', lang_to='ru'):
     '''Эта функция загружает изображение с помощью cv2, из данного пути,
     создает запрос на сервис, затем после получения ответа создает новый файл с
     переведенным текстом, принимает аргументы:
@@ -17,7 +17,8 @@ def create_request(source_path, save_path):
     # Создание данных для отправки на сервис
     data = {
         'file': cv2.imencode('.png', image)[1].tobytes(),
-        # 'content_type': 'image/'
+        'lang_from': lang_from,
+        'lang_to': lang_to
     }
     # Отправка Пост запроса на сервис
     try:
@@ -38,7 +39,7 @@ def create_request(source_path, save_path):
 if __name__ == '__main__':
     # source_path = 'original/Slide31articlestext-over-images.png'
     # Используем путь начального изображения для создания пути для сохранения
-    source_path = 'original/Slide31articlestext-over-images.png'
+    source_path = 'original/test3.jpg'
     filelist = source_path.split('/')[-1].split('.')
     filename = filelist[-2]
     extention = filelist[-1]
